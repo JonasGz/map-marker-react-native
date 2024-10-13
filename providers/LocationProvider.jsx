@@ -31,6 +31,21 @@ export const LocationProvider = ({ children }) => {
     getPermission();
   }, [permissionStatus]);
 
+  useEffect(() => {
+    const getMarkersDb = async () => {
+      try {
+        const data = await getData();
+        if (data) {
+          setMarkers(data);
+        }
+      } catch (error) {
+        console.error("Erro ao pegar os dados do Storage", error);
+      }
+    };
+
+    getMarkersDb();
+  }, [markers]);
+
   const addMarkers = async (newMarker) => {
     if (markers) {
       try {

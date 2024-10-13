@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { TextInput, StyleSheet, SafeAreaView, Button } from "react-native";
-import { useLocationProvider } from "../../providers/LocationProvider";
+import { useLocationProvider } from "../providers/LocationProvider";
 
 const Form = () => {
   const [nameLocation, setNameLocation] = useState("");
