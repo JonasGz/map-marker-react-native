@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { TextInput, StyleSheet, SafeAreaView, Button } from "react-native";
+import { useLocationProvider } from "../../providers/LocationProvider";
 
 const Form = () => {
   const [nameLocation, setNameLocation] = useState("");
   const [latLocation, setLatLocation] = useState("");
   const [longLocation, setLongLocation] = useState("");
   const [colorLocation, setColorLocation] = useState("");
-  const [location, setLocation] = useState(null);
+  const { addMarkers, markers } = useLocationProvider();
 
   const changeNameLocation = (e) => {
     setNameLocation(e);
@@ -29,12 +30,10 @@ const Form = () => {
         longitude: longLocation,
         color: colorLocation,
       };
-      setLocation(newLocation);
+      addMarkers(newLocation);
+      console.log(markers);
     }
   };
-  useEffect(() => {
-    console.log(location);
-  }, [location]);
 
   return (
     <SafeAreaView style={styles.container}>
