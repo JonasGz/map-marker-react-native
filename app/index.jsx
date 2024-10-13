@@ -19,7 +19,7 @@ export default function App() {
   }, [isMounted, router]);
 
   const consoleTest = () => {
-    router.push("/add-location");
+    // router.push("/add-location");
     // console.log(location);
   };
 
