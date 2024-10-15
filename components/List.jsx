@@ -9,10 +9,19 @@ const List = () => {
     <SafeAreaView>
       <FlatList
         data={markers}
+        keyExtractor={(item) => Object.keys(item)[0]}
         estimatedItemSize={20}
-        renderItem={({ item }) => (
-          <Tile name={item.name} lat={item.latitude} long={item.longitude} />
-        )}
+        renderItem={({ item }) => {
+          const key = Object.keys(item)[0];
+          const value = item[key];
+          return (
+            <Tile
+              name={value.name}
+              lat={value.latitude}
+              long={value.longitude}
+            />
+          );
+        }}
       />
     </SafeAreaView>
   );

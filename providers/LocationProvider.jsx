@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import * as Location from "expo-location";
-import { getData, addData } from "../AsyncStorage/AsyncStorage";
+import { getData, addData, getAllKeys } from "../AsyncStorage/AsyncStorage";
 
 const LocContext = createContext();
 
@@ -49,7 +49,7 @@ export const LocationProvider = ({ children }) => {
   const addMarkers = async (newMarker) => {
     if (markers) {
       try {
-        await addData([...markers, newMarker]);
+        await addData(...markers, newMarker);
         const existsData = await getData();
         setMarkers(existsData);
       } catch (e) {
@@ -57,9 +57,10 @@ export const LocationProvider = ({ children }) => {
       }
     } else {
       try {
-        await addData([newMarker]);
-        const markersDb = await getData();
+        await addData(newMarker);
+        const markersDb = await getAllKeys();
         setMarkers(markersDb);
+        console.log("adicionei ao setMarkers");
       } catch (e) {
         console.error(e);
       }

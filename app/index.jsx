@@ -3,6 +3,11 @@ import MapView, { Marker } from "react-native-maps";
 import { StyleSheet, View } from "react-native";
 import { useRouter, router } from "expo-router";
 import { LocContext, useLocationProvider } from "../providers/LocationProvider";
+import {
+  getAllKeys,
+  removeAll,
+  removeValue,
+} from "../AsyncStorage/AsyncStorage";
 
 export default function App() {
   const router = useRouter();
@@ -20,7 +25,11 @@ export default function App() {
 
   const consoleTest = () => {
     router.push("/list-location");
+    // getAllKeys();
+    // console.log(markers);
+    // removeValue();
     // console.log(location);
+    // removeAll();
   };
 
   return (
@@ -37,15 +46,22 @@ export default function App() {
           style={styles.map}
         >
           {markers &&
-            markers.map((marker, index) => (
-              <Marker
-                title={marker.name}
-                description={`Lat: ${marker.latitude} Long: ${marker.longitude}`}
-                pinColor={marker.color}
-                key={index}
-                coordinate={marker}
-              />
-            ))}
+            markers.map((marker, index) => {
+              const key = Object.keys(marker)[0];
+              const value = marker[key];
+              return (
+                <Marker
+                  title={value.name}
+                  description={`Lat: ${value.latitude} Long: ${value.longitude}`}
+                  pinColor={value.color}
+                  key={index}
+                  coordinate={{
+                    latitude: value.latitude,
+                    longitude: value.longitude,
+                  }}
+                />
+              );
+            })}
         </MapView>
       )}
     </View>

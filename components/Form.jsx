@@ -31,7 +31,7 @@ const Form = () => {
         color: colorLocation,
       };
       addMarkers(newLocation);
-      console.log(markers);
+      // console.log(markers);
     }
   };
 
