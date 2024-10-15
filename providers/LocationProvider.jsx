@@ -34,9 +34,9 @@ export const LocationProvider = ({ children }) => {
   useEffect(() => {
     const getMarkersDb = async () => {
       try {
-        const data = await getData();
-        if (data) {
-          setMarkers(data);
+        const markersDb = await getAllKeys();
+        if (markersDb) {
+          setMarkers(markersDb);
         }
       } catch (error) {
         console.error("Erro ao pegar os dados do Storage", error);
@@ -47,23 +47,13 @@ export const LocationProvider = ({ children }) => {
   }, [markers]);
 
   const addMarkers = async (newMarker) => {
-    if (markers) {
-      try {
-        await addData(...markers, newMarker);
-        const existsData = await getData();
-        setMarkers(existsData);
-      } catch (e) {
-        console.error(e);
-      }
-    } else {
-      try {
-        await addData(newMarker);
-        const markersDb = await getAllKeys();
-        setMarkers(markersDb);
-        console.log("adicionei ao setMarkers");
-      } catch (e) {
-        console.error(e);
-      }
+    try {
+      await addData(newMarker);
+      const markersDb = await getAllKeys();
+      setMarkers(markersDb);
+      console.log("adicionei ao setMarkers");
+    } catch (e) {
+      console.error(e);
     }
   };
 

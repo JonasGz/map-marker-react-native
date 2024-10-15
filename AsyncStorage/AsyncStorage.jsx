@@ -5,6 +5,7 @@ const addData = async (value) => {
     const jsonValue = JSON.stringify(value);
     const id = Math.random().toString();
     await AsyncStorage.setItem(id, jsonValue);
+    console.log("Adicionado!");
   } catch (error) {
     console.error("Erro ao salvar item no Storage", error);
   }
@@ -29,7 +30,6 @@ const getAllKeys = async () => {
       [key]: JSON.parse(value),
     }));
     return arrayFormatted;
-    // console.log(arrayFormatted);
   } catch (e) {
     // read key error
   }
@@ -46,6 +46,16 @@ const removeValue = async () => {
   console.log("Done.");
 };
 
+const updateValue = async (id, value) => {
+  try {
+    const key = String(id);
+    const valueStringify = JSON.stringify(value);
+    await AsyncStorage.mergeItem(key, valueStringify);
+  } catch (e) {
+    console.error(e);
+  }
+};
+
 const removeAll = async () => {
   const keys = await AsyncStorage.getAllKeys();
 
@@ -58,4 +68,4 @@ const removeAll = async () => {
   console.log("Done");
 };
 
-export { addData, getData, removeValue, getAllKeys, removeAll };
+export { addData, getData, removeValue, getAllKeys, removeAll, updateValue };

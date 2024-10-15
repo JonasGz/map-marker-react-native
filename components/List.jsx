@@ -16,9 +16,11 @@ const List = () => {
           const value = item[key];
           return (
             <Tile
+              id={key}
               name={value.name}
               lat={value.latitude}
               long={value.longitude}
+              color={value.color}
             />
           );
         }}

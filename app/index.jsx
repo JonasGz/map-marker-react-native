@@ -25,7 +25,7 @@ export default function App() {
 
   const consoleTest = () => {
     router.push("/list-location");
-    // getAllKeys();
+    // console.log(getAllKeys());
     // console.log(markers);
     // removeValue();
     // console.log(location);

@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { TextInput, StyleSheet, SafeAreaView, Button } from "react-native";
 import { useLocationProvider } from "../providers/LocationProvider";
+import { getAllKeys, updateValue } from "../AsyncStorage/AsyncStorage";
 
-const Form = () => {
-  const [nameLocation, setNameLocation] = useState("");
-  const [latLocation, setLatLocation] = useState("");
-  const [longLocation, setLongLocation] = useState("");
-  const [colorLocation, setColorLocation] = useState("");
+const Form = ({ name, lat, long, color, type, id }) => {
+  const [nameLocation, setNameLocation] = useState(name ? name : "");
+  const [latLocation, setLatLocation] = useState(lat ? lat : "");
+  const [longLocation, setLongLocation] = useState(long ? long : "");
+  const [colorLocation, setColorLocation] = useState(color ? color : "");
   const { addMarkers, markers } = useLocationProvider();
 
   const changeNameLocation = (e) => {
@@ -33,6 +34,16 @@ const Form = () => {
       addMarkers(newLocation);
       // console.log(markers);
     }
+  };
+
+  const handleEdit = async () => {
+    const markerUpdate = {
+      name: nameLocation,
+      latitude: latLocation,
+      longitude: longLocation,
+      color: colorLocation,
+    };
+    await updateValue(id, markerUpdate);
   };
 
   return (
@@ -62,7 +73,11 @@ const Form = () => {
         placeholder="Cor do Marker"
       />
 
-      <Button style={styles.button} title="Adicionar" onPress={handleSubmit} />
+      <Button
+        style={styles.button}
+        title={type === "add-location" ? "Adicionar" : "Editar"}
+        onPress={type === "add-location" ? handleSubmit : handleEdit}
+      />
     </SafeAreaView>
   );
 };

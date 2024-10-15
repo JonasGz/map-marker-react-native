@@ -3,11 +3,14 @@ import { Text, View, StyleSheet } from "react-native";
 import { useRouter, router } from "expo-router";
 import { TouchableOpacity } from "react-native";
 
-const Tile = ({ name, lat, long }) => {
+const Tile = ({ name, lat, long, color, id }) => {
   const router = useRouter();
 
   const handleClick = () => {
-    router.push({ pathname: "/edit-location", params: { name, lat, long } });
+    router.push({
+      pathname: "/edit-location",
+      params: { id, name, lat, long, color },
+    });
   };
 
   return (
@@ -17,6 +20,7 @@ const Tile = ({ name, lat, long }) => {
         <View style={styles.containerInfos}>
           <Text>Latitude: {lat}</Text>
           <Text>Longitude: {long}</Text>
+          <Text>Longitude: {color}</Text>
         </View>
       </View>
     </TouchableOpacity>
