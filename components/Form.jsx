@@ -4,11 +4,18 @@ import { useLocationProvider } from "../providers/LocationProvider";
 import { getAllKeys, updateValue } from "../AsyncStorage/AsyncStorage";
 
 const Form = ({ name, lat, long, color, type, id }) => {
-  const [nameLocation, setNameLocation] = useState(name ? name : "");
-  const [latLocation, setLatLocation] = useState(lat ? lat : "");
-  const [longLocation, setLongLocation] = useState(long ? long : "");
-  const [colorLocation, setColorLocation] = useState(color ? color : "");
+  const [nameLocation, setNameLocation] = useState("");
+  const [latLocation, setLatLocation] = useState("");
+  const [longLocation, setLongLocation] = useState("");
+  const [colorLocation, setColorLocation] = useState("");
   const { addMarkers, markers } = useLocationProvider();
+
+  useEffect(() => {
+    setNameLocation(name || "");
+    setLatLocation(lat || "");
+    setLongLocation(long || "");
+    setColorLocation(color || "");
+  }, [name, lat, long, color]);
 
   const changeNameLocation = (e) => {
     setNameLocation(e);
@@ -32,7 +39,6 @@ const Form = ({ name, lat, long, color, type, id }) => {
         color: colorLocation,
       };
       addMarkers(newLocation);
-      // console.log(markers);
     }
   };
 

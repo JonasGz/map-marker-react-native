@@ -2,12 +2,15 @@ import React, { useContext, useEffect, useState } from "react";
 import MapView, { Marker } from "react-native-maps";
 import { StyleSheet, View } from "react-native";
 import { useRouter, router } from "expo-router";
-import { LocContext, useLocationProvider } from "../providers/LocationProvider";
+import {
+  LocContext,
+  useLocationProvider,
+} from "../../providers/LocationProvider";
 import {
   getAllKeys,
   removeAll,
   removeValue,
-} from "../AsyncStorage/AsyncStorage";
+} from "../../AsyncStorage/AsyncStorage";
 
 export default function App() {
   const router = useRouter();
@@ -23,8 +26,21 @@ export default function App() {
     }
   }, [isMounted, router]);
 
+  const handleClick = (key, value) => {
+    router.push({
+      pathname: "edit-location",
+      params: {
+        name: value.name,
+        lat: value.latitude,
+        long: value.longitude,
+        color: value.color,
+        id: key,
+      },
+    });
+  };
+
   const consoleTest = () => {
-    router.push("/list-location");
+    // router.push("/list-location");
     // console.log(getAllKeys());
     // console.log(markers);
     // removeValue();
@@ -51,6 +67,7 @@ export default function App() {
               const value = marker[key];
               return (
                 <Marker
+                  onCalloutPress={() => handleClick(key, value)}
                   title={value.name}
                   description={`Lat: ${value.latitude} Long: ${value.longitude}`}
                   pinColor={value.color}

@@ -1,7 +1,6 @@
 import { useLocalSearchParams } from "expo-router";
 import React from "react";
-import { Text } from "react-native";
-import Form from "../components/Form";
+import Form from "../../components/Form";
 
 const EditLocation = () => {
   const { name, lat, long, color, id } = useLocalSearchParams();

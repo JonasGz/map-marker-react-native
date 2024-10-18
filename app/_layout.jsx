@@ -4,7 +4,9 @@ import { LocationProvider } from "../providers/LocationProvider";
 export default function Layout() {
   return (
     <LocationProvider>
-      <Stack />
+      <Stack>
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      </Stack>
     </LocationProvider>
   );
 }

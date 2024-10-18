@@ -8,8 +8,8 @@ const Tile = ({ name, lat, long, color, id }) => {
 
   const handleClick = () => {
     router.push({
-      pathname: "/edit-location",
-      params: { id, name, lat, long, color },
+      pathname: "edit-location",
+      params: { name, lat, long, color, id },
     });
   };
 
@@ -20,7 +20,7 @@ const Tile = ({ name, lat, long, color, id }) => {
         <View style={styles.containerInfos}>
           <Text>Latitude: {lat}</Text>
           <Text>Longitude: {long}</Text>
-          <Text>Longitude: {color}</Text>
+          <Text>Color: {color}</Text>
         </View>
       </View>
     </TouchableOpacity>
