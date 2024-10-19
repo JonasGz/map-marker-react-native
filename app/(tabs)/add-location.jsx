@@ -1,13 +1,22 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { SafeAreaView, Text, View, StyleSheet } from "react-native";
 import Form from "../../components/Form";
 
 const AddLocation = () => {
   return (
-    <View>
+    <SafeAreaView style={styles.container}>
       <Form type="add-location" />
-    </View>
+    </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 40,
+  },
+});
 
 export default AddLocation;

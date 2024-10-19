@@ -65,6 +65,9 @@ export default function App() {
             markers.map((marker, index) => {
               const key = Object.keys(marker)[0];
               const value = marker[key];
+              const latitude = parseFloat(value.latitude);
+              const longitude = parseFloat(value.longitude);
+
               return (
                 <Marker
                   onCalloutPress={() => handleClick(key, value)}
@@ -73,8 +76,8 @@ export default function App() {
                   pinColor={value.color}
                   key={index}
                   coordinate={{
-                    latitude: value.latitude,
-                    longitude: value.longitude,
+                    latitude: latitude,
+                    longitude: longitude,
                   }}
                 />
               );

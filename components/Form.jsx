@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { TextInput, StyleSheet, SafeAreaView, Button } from "react-native";
-import { useLocationProvider } from "../providers/LocationProvider";
-import { getAllKeys, updateValue } from "../AsyncStorage/AsyncStorage";
+import { TextInput, StyleSheet, View } from "react-native";
+import ButtonComponent from "./ButtonComponent";
 
 const Form = ({ name, lat, long, color, type, id }) => {
   const [nameLocation, setNameLocation] = useState("");
   const [latLocation, setLatLocation] = useState("");
   const [longLocation, setLongLocation] = useState("");
   const [colorLocation, setColorLocation] = useState("");
-  const { addMarkers, markers } = useLocationProvider();
 
   useEffect(() => {
     setNameLocation(name || "");
@@ -30,30 +28,8 @@ const Form = ({ name, lat, long, color, type, id }) => {
     setColorLocation(e);
   };
 
-  const handleSubmit = () => {
-    if (nameLocation && latLocation && longLocation && colorLocation) {
-      const newLocation = {
-        name: nameLocation,
-        latitude: latLocation,
-        longitude: longLocation,
-        color: colorLocation,
-      };
-      addMarkers(newLocation);
-    }
-  };
-
-  const handleEdit = async () => {
-    const markerUpdate = {
-      name: nameLocation,
-      latitude: latLocation,
-      longitude: longLocation,
-      color: colorLocation,
-    };
-    await updateValue(id, markerUpdate);
-  };
-
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <TextInput
         style={styles.textInput}
         onChangeText={changeNameLocation}
@@ -78,29 +54,45 @@ const Form = ({ name, lat, long, color, type, id }) => {
         value={colorLocation}
         placeholder="Cor do Marker"
       />
-
-      <Button
-        style={styles.button}
-        title={type === "add-location" ? "Adicionar" : "Editar"}
-        onPress={type === "add-location" ? handleSubmit : handleEdit}
-      />
-    </SafeAreaView>
+      {type === "edit-location" ? (
+        <ButtonComponent
+          id={id}
+          name={nameLocation}
+          latitude={latLocation}
+          longitude={longLocation}
+          color={colorLocation}
+          type="edit-location"
+        />
+      ) : (
+        <ButtonComponent
+          id={id}
+          name={nameLocation}
+          latitude={latLocation}
+          longitude={longLocation}
+          color={colorLocation}
+          type="add-location"
+        />
+      )}
+      {}
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: "center",
     gap: 16,
+    width: "100%",
+    alignItems: "center",
   },
   textInput: {
+    width: "100%",
     fontSize: 18,
     color: "#444",
     borderColor: "#999",
     borderWidth: 1,
     borderRadius: 10,
     padding: 10,
-    width: 260,
+    // width: 260,
   },
   button: {},
 });
