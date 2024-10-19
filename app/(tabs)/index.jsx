@@ -1,30 +1,15 @@
-import React, { useContext, useEffect, useState } from "react";
+import React from "react";
 import MapView, { Marker } from "react-native-maps";
 import { StyleSheet, View } from "react-native";
 import { useRouter, router } from "expo-router";
-import {
-  LocContext,
-  useLocationProvider,
-} from "../../providers/LocationProvider";
-import {
-  getAllKeys,
-  removeAll,
-  removeValue,
-} from "../../AsyncStorage/AsyncStorage";
+import { useLocationProvider } from "../../providers/LocationProvider";
+import useOrientation from "../../hooks/useOrientation";
 
 export default function App() {
   const router = useRouter();
-  const [isMounted, setIsMounted] = useState(false);
-  const { location, markers, getMarker } = useLocationProvider();
+  const { location, markers } = useLocationProvider();
 
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  useEffect(() => {
-    if (isMounted) {
-    }
-  }, [isMounted, router]);
+  const orientation = useOrientation();
 
   const handleClick = (key, value) => {
     router.push({
@@ -46,6 +31,7 @@ export default function App() {
     // removeValue();
     // console.log(location);
     // removeAll();
+    // console.log("essa é a orientarion", orientation);
   };
 
   return (
@@ -65,8 +51,8 @@ export default function App() {
             markers.map((marker, index) => {
               const key = Object.keys(marker)[0];
               const value = marker[key];
-              const latitude = parseFloat(value.latitude);
-              const longitude = parseFloat(value.longitude);
+              const latitude = value.latitude;
+              const longitude = value.longitude;
 
               return (
                 <Marker

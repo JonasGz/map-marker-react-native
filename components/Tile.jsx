@@ -29,6 +29,7 @@ const Tile = ({ name, lat, long, color, id }) => {
 
 const styles = StyleSheet.create({
   container: {
+    width: "100%",
     flex: 1,
     padding: 16,
     backgroundColor: "#ddd",
