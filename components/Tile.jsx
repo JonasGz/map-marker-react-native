@@ -1,7 +1,7 @@
 import React from "react";
-import { Text, View, StyleSheet } from "react-native";
-import { useRouter, router } from "expo-router";
+import { useRouter } from "expo-router";
 import { TouchableOpacity } from "react-native";
+import styled from "styled-components/native";
 
 const Tile = ({ name, lat, long, color, id }) => {
   const router = useRouter();
@@ -14,38 +14,60 @@ const Tile = ({ name, lat, long, color, id }) => {
   };
 
   return (
-    <TouchableOpacity onPress={handleClick}>
-      <View style={styles.container}>
-        <Text style={styles.name}> {name}</Text>
-        <View style={styles.containerInfos}>
-          <Text>Latitude: {lat}</Text>
-          <Text>Longitude: {long}</Text>
-          <Text>Color: {color}</Text>
-        </View>
-      </View>
-    </TouchableOpacity>
+    <TileContainer onPress={handleClick}>
+      <Container>
+        <ContainerTitle>
+          <NameText> {name}</NameText>
+          <ColorMarker color={color} />
+        </ContainerTitle>
+
+        <InfoContainer>
+          <InfoText>Lat: {lat}</InfoText>
+          <InfoText>Long: {long}</InfoText>
+          <InfoText>Color: {color}</InfoText>
+        </InfoContainer>
+      </Container>
+    </TileContainer>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    width: "100%",
-    flex: 1,
-    padding: 16,
-    backgroundColor: "#ddd",
-    margin: 8,
-    borderRadius: 10,
-    gap: 10,
-  },
-  name: {
-    fontSize: 16,
-  },
-  containerInfos: {
-    flex: 1,
-    flexDirection: "row",
-    gap: 10,
-    paddingLeft: 4,
-  },
-});
+const TileContainer = styled(TouchableOpacity)`
+  margin-bottom: 10px;
+`;
+
+const ContainerTitle = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+const Container = styled.View`
+  width: 100%;
+  flex: 1;
+  padding: 16px;
+  background-color: #ddd;
+  border-radius: 10px;
+  gap: 10px;
+`;
+
+const NameText = styled.Text`
+  font-size: 16px;
+`;
+
+const InfoContainer = styled.View`
+  flex: 1;
+  flex-direction: row;
+  gap: 10px;
+  padding-left: 4px;
+`;
+
+const InfoText = styled.Text``;
+
+const ColorMarker = styled.SafeAreaView`
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+  background-color: ${({ color }) => color || "#ddd"};
+`;
 
 export default Tile;
