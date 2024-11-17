@@ -27,28 +27,18 @@ export default function App() {
     });
   };
 
-  const consoleTest = () => {
-    // router.push("/list-location");
-    // console.log(getAllKeys());
-    // console.log(markers);
-    // removeValue();
-    // console.log(location);
-    // removeAll();
-    // console.log("essa é a orientarion", orientation);
-  };
-
   if (!isPortrait) {
     return (
       <View style={stylesLandscape.container}>
         <List />
         {location && (
           <MapView
-            onPress={() => consoleTest()}
             initialRegion={{
               latitude: location.latitude,
               longitude: location.longitude,
               latitudeDelta: 0.0922,
               longitudeDelta: 0.0421,
+              showsUserLocation,
             }}
             style={styles.map}
           >
@@ -61,6 +51,7 @@ export default function App() {
 
                 return (
                   <Marker
+                    draggable
                     onCalloutPress={() => handleClick(key, value)}
                     title={value.name}
                     description={`Lat: ${value.latitude} Long: ${value.longitude}`}
@@ -86,13 +77,13 @@ export default function App() {
       <View style={styles.container}>
         {location && (
           <MapView
-            onPress={() => consoleTest()}
             initialRegion={{
               latitude: location.latitude,
               longitude: location.longitude,
               latitudeDelta: 0.0922,
               longitudeDelta: 0.0421,
             }}
+            showsUserLocation
             style={styles.map}
           >
             {markers &&
