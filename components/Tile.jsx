@@ -1,7 +1,9 @@
-import React from "react";
+import { React } from "react";
 import { useRouter } from "expo-router";
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, StyleSheet, Text, View } from "react-native";
 import styled from "styled-components/native";
+import { removeValue } from "../AsyncStorage/AsyncStorage";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 const Tile = ({ name, lat, long, color, id }) => {
   const router = useRouter();
@@ -13,23 +15,53 @@ const Tile = ({ name, lat, long, color, id }) => {
     });
   };
 
-  return (
-    <TileContainer onPress={handleClick}>
-      <Container>
-        <ContainerTitle>
-          <NameText> {name}</NameText>
-          <ColorMarker color={color} />
-        </ContainerTitle>
+  const handleRemove = async () => {
+    try {
+      const key = String(id);
+      await removeValue(key);
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
-        <InfoContainer>
-          <InfoText>Lat: {lat}</InfoText>
-          <InfoText>Long: {long}</InfoText>
-          <InfoText>Color: {color}</InfoText>
-        </InfoContainer>
-      </Container>
-    </TileContainer>
+  return (
+    <View style={styles.container}>
+      <TileContainer onPress={handleClick}>
+        <Container>
+          <ContainerTitle>
+            <NameText> {name}</NameText>
+            <ColorMarker color={color} />
+          </ContainerTitle>
+
+          <InfoContainer>
+            <InfoText>Lat: {lat}</InfoText>
+            <InfoText>Long: {long}</InfoText>
+            <InfoText>Color: {color}</InfoText>
+          </InfoContainer>
+        </Container>
+      </TileContainer>
+      <TouchableOpacity onPress={handleRemove} style={styles.removeButton}>
+        <Ionicons name="remove-circle" size={32} color="red" />
+      </TouchableOpacity>
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    display: "flex",
+    flexDirection: "row",
+    gap: 10,
+    alignItems: "center",
+  },
+  removeButton: {
+    padding: 10,
+    borderRadius: 10,
+  },
+  textRemoveButton: {
+    color: "#fff",
+  },
+});
 
 const TileContainer = styled(TouchableOpacity)`
   margin-bottom: 10px;

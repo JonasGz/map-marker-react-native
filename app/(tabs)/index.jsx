@@ -2,7 +2,7 @@ import React from "react";
 import MapView, { Marker } from "react-native-maps";
 import { Platform } from "react-native";
 import { StyleSheet, View, Text } from "react-native";
-import { useRouter, router } from "expo-router";
+import { useRouter } from "expo-router";
 import { useLocationProvider } from "../../providers/LocationProvider";
 import useOrientation from "../../hooks/useOrientation";
 import List from "../../components/List";
@@ -11,8 +11,6 @@ export default function App() {
   const router = useRouter();
   const { location, markers } = useLocationProvider();
   const { isPortrait } = useOrientation();
-
-  const orientation = useOrientation();
 
   const handleClick = (key, value) => {
     router.push({
@@ -38,11 +36,11 @@ export default function App() {
               longitude: location.longitude,
               latitudeDelta: 0.0922,
               longitudeDelta: 0.0421,
-              showsUserLocation,
             }}
+            showsUserLocation
             style={styles.map}
           >
-            {markers &&
+            {markers.length > 0 &&
               markers.map((marker, index) => {
                 const key = Object.keys(marker)[0];
                 const value = marker[key];
@@ -86,7 +84,7 @@ export default function App() {
             showsUserLocation
             style={styles.map}
           >
-            {markers &&
+            {markers.length > 0 &&
               markers.map((marker, index) => {
                 const key = Object.keys(marker)[0];
                 const value = marker[key];

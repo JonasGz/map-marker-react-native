@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import * as Location from "expo-location";
-import { getData, addData, getAllKeys } from "../AsyncStorage/AsyncStorage";
+import { addData, getAllKeys } from "../AsyncStorage/AsyncStorage";
 
 const LocContext = createContext();
 

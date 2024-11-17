@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 import { Text, StyleSheet } from "react-native";
 import { useLocationProvider } from "../providers/LocationProvider";
-import { getAllKeys, updateValue } from "../AsyncStorage/AsyncStorage";
+import {
+  getAllKeys,
+  removeValue,
+  updateValue,
+} from "../AsyncStorage/AsyncStorage";
 
 const ButtonComponent = ({ id, name, latitude, longitude, color, type }) => {
   const { addMarkers, markers } = useLocationProvider();
@@ -50,21 +54,37 @@ const ButtonComponent = ({ id, name, latitude, longitude, color, type }) => {
     }
   }, [isClick]);
 
-  return type === "edit-location" ? (
-    <>
-      <TouchableOpacity onPress={handleEdit} style={styles.button}>
-        <Text style={styles.text}>Editar</Text>
-      </TouchableOpacity>
-      {isClick && <Text>Localização atualizada com sucesso!</Text>}
-    </>
-  ) : (
-    <>
-      <TouchableOpacity onPress={handleSubmit} style={styles.button}>
-        <Text style={styles.text}>Submit</Text>
-      </TouchableOpacity>
-      {isClick && <Text>Localização adicionada com sucesso!</Text>}
-    </>
-  );
+  if (type === "edit-location") {
+    return (
+      <>
+        <TouchableOpacity onPress={handleEdit} style={styles.button}>
+          <Text style={styles.text}>Editar</Text>
+        </TouchableOpacity>
+        {isClick && <Text>Localização atualizada com sucesso!</Text>}
+      </>
+    );
+  }
+  if (type === "remove-location") {
+    return (
+      <>
+        <TouchableOpacity onPress={handleRemove} style={styles.button}>
+          <Text style={styles.text}>Remove</Text>
+        </TouchableOpacity>
+        {isClick && <Text>Localização atualizada com sucesso!</Text>}
+      </>
+    );
+  }
+
+  if (type === "add-location") {
+    return (
+      <>
+        <TouchableOpacity onPress={handleSubmit} style={styles.button}>
+          <Text style={styles.text}>Submit</Text>
+        </TouchableOpacity>
+        {isClick && <Text>Localização adicionada com sucesso!</Text>}
+      </>
+    );
+  }
 };
 
 const styles = StyleSheet.create({

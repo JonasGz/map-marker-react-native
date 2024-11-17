@@ -1,8 +1,7 @@
 import React from "react";
-import { FlatList, SafeAreaView, Text, StyleSheet } from "react-native";
+import { FlatList, SafeAreaView, StyleSheet } from "react-native";
 import { useLocationProvider } from "../providers/LocationProvider";
 import Tile from "./Tile";
-import styled from "styled-components/native";
 
 const List = () => {
   const { markers } = useLocationProvider();

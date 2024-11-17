@@ -55,14 +55,16 @@ const Form = ({ name, lat, long, color, type, id }) => {
         placeholder="Cor do Marker"
       />
       {type === "edit-location" ? (
-        <ButtonComponent
-          id={id}
-          name={nameLocation}
-          latitude={latLocation}
-          longitude={longLocation}
-          color={colorLocation}
-          type="edit-location"
-        />
+        <>
+          <ButtonComponent
+            id={id}
+            name={nameLocation}
+            latitude={latLocation}
+            longitude={longLocation}
+            color={colorLocation}
+            type="edit-location"
+          />
+        </>
       ) : (
         <ButtonComponent
           id={id}

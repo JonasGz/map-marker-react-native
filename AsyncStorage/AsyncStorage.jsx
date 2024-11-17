@@ -31,19 +31,16 @@ const getAllKeys = async () => {
     }));
     return arrayFormatted;
   } catch (e) {
-    // read key error
+    console.error("Erro ao buscar keys!", e);
   }
 };
 
-const removeValue = async () => {
+const removeValue = async (key) => {
   try {
-    await AsyncStorage.removeItem("0.44944118427125573");
-    console.log("removido");
+    await AsyncStorage.removeItem(key);
   } catch (e) {
-    // remove error
+    console.error("Erro ao remover item!", e);
   }
-
-  console.log("Done.");
 };
 
 const updateValue = async (id, value) => {
@@ -56,16 +53,4 @@ const updateValue = async (id, value) => {
   }
 };
 
-const removeAll = async () => {
-  const keys = await AsyncStorage.getAllKeys();
-
-  try {
-    await AsyncStorage.multiRemove(keys);
-  } catch (e) {
-    // remove error
-  }
-
-  console.log("Done");
-};
-
-export { addData, getData, removeValue, getAllKeys, removeAll, updateValue };
+export { addData, getData, removeValue, getAllKeys, updateValue };

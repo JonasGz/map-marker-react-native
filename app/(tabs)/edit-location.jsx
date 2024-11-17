@@ -8,14 +8,16 @@ const EditLocation = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Form
-        id={id}
-        name={name}
-        lat={lat}
-        long={long}
-        color={color}
-        type="edit-location"
-      />
+      {(name, lat, long, color, id) && (
+        <Form
+          id={id}
+          name={name}
+          lat={lat}
+          long={long}
+          color={color}
+          type="edit-location"
+        />
+      )}
     </SafeAreaView>
   );
 };
